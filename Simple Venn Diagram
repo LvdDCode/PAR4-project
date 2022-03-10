@@ -1,0 +1,28 @@
+library(tidyverse)
+library(ggforce) 
+
+# DataFrame to specify circle and text positions
+data <- data.frame(x = c(0, 1, -1),
+                   y = c(-0.5, 1, 1),
+                   tx = c(0, 1.5, -1.5),
+                   ty = c(-1, 1.3, 1.3),
+                   cat = c('WTPAR4 vs MutPAR4', 'MutPAR4 vs Control', 
+                           'WTPAR4 vs Control'))
+
+UNcat <- c("272","100","24")
+
+# Plot circles and text; add annotations for overlapping segments
+
+ggplot(data, aes(x0 = x , y0 = y, r = 1.5, fill = cat)) + 
+  geom_circle(alpha = 0.25, size = 1, color = "black",show.legend = TRUE) + 
+  geom_text(aes(x = tx , y = ty, label = UNcat), size = 9) +
+  annotate(geom="text", x=0, y=1.5, label="54",color="black", size = 9, face = "bold") +
+  annotate(geom="text", x=-0.9, y=0, label="72",color="black", size = 9) +
+  annotate(geom="text", x=0.9, y=0, label="11",color="black", size = 9) +
+  annotate(geom="text", x=0, y=0.5, label="6",color="black", size = 9) +
+  theme_void() 
+
+
+
+# Set plot display size
+options(repr.plot.height=8, repr.plot.width=8)
