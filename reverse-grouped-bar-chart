@@ -1,0 +1,28 @@
+ProteinClassData <- data.frame(protein=rep(c("protein modifying enzyme","transporter","scaffold/adaptor protein","membrane traffic protein","chaperone","cell adhesion molecule","protein-binding activity modulator","transfer/carrier protein", "nucleic acid metabolism protein", "transmembrane signal receptor", "calcium-binding protein", "cytoskeletal protein", "gene-specific transcriptional regulator", "translational protein", "metabolite interconversion enzyme", "chromatin/chromatin-binding, or -regulatory protein", "unknown"), each=3), 
+                               samples=rep(c('wtPAR4-control',"mutPAR4-control", "wtPAR4-mutPAR4"), times=17),
+                               distribution=c(10.3, 2.7, 14.6, 17.2, 4, 17.5, 1.1, 1.3, 2.2, 5.7, 0, 5.8, 5.7, 2.7, 7.3, 0, 0, 0.7, 2.3, 1.3, 7.3, 1.1, 1.3, 1.5, 4.6, 12, 4.4, 0, 0, 2.2, 1.1, 1.3, 0.7, 10.3, 20, 4.4, 0, 0, 0.7, 27.6, 36, 4.4, 11.5, 13.3, 24.1, 1.1, 2.7, 2.2, 0.4, 1.4, 0))
+
+#Trial 
+library(ggplot2)
+library(tidyverse)
+ProteinClassData %>% ggplot(aes(x=forcats::fct_reorder(protein,distribution), y=distribution, fill=samples, expand_limits(x=40))) +
+  geom_col(position="dodge") +
+  scale_fill_manual(values = c("#F9AAB7","#76D7D6","#6EB5FF"), name=element_blank()) +
+  coord_flip() +
+  labs(x=element_blank(), y="Protein Class Distribution (%)") +
+  theme_bw() +
+  theme(axis.text=element_text(size=18, face=("bold"), colour="black"),
+        axis.text.y=element_text(face="bold", size=20),
+        axis.title=element_text(size=20, face="bold"),
+        axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_rect(colour = "black", fill=NA, size=1),
+        panel.background = element_blank(),
+        legend.text = element_text(size=13, face="bold"),
+        legend.position=c(.83,.10),
+        legend.box.margin=margin(1,1,1,1)) +
+  theme(plot.margin=unit(c(1,1,1,1),"cm")) +
+  geom_hline(yintercept = c(10,20,30), linetype=2, color="darkgrey", lwd=1) +
+  scale_y_continuous(expand = c(0,0), limits=c(0,40)) +
+  guides(fill = guide_legend(reverse=TRUE))
